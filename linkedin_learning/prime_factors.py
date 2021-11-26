@@ -53,7 +53,6 @@ def prime_factors_simple(number: int) -> List:
     factors = []
     divisor = 2
     dividend = number
-    print("Hello world")
     while divisor <= dividend:
         if dividend % divisor == 0:
             factors.append(divisor)
