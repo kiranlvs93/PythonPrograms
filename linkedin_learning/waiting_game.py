@@ -31,21 +31,25 @@ def waiting_game_method1():
 
 
 def waiting_game_method2():
-    target = random.randint(2, 4)  # target seconds to wait
-    print(f"Your target time is {target} seconds")
-    input(' ---Press Enter to Begin--- ')
-    start = time.perf_counter()
 
-    input(f'\n... Press Enter again after {target} seconds...')
-    elapsed = time.perf_counter() - start
+    while True:
+        target = random.randint(2, 4)  # target seconds to wait
+        print("******************************************")
+        print(f"Your target time is {target} seconds")
+        if input(' ---Press Enter to Begin quit to exit--- ') == 'quit':
+            break
+        start = time.perf_counter()
 
-    print("\nElapsed time: {0:.3f} seconds".format(elapsed))
-    if elapsed == target:
-        print('(Unbelievable! Perfect timing!)')
-    elif elapsed < target:
-        print('({0:.3f} seconds too fast)'.format(target - elapsed))
-    else:
-        print('({0:.3f} seconds too slow)'.format(elapsed - target))
+        input(f'\n... Press Enter again after {target} seconds...')
+        elapsed = time.perf_counter() - start
+
+        print("\nElapsed time: {0:.3f} seconds".format(elapsed))
+        if elapsed == target:
+            print('(Unbelievable! Perfect timing!)')
+        elif elapsed < target:
+            print('({0:.3f} seconds too fast)'.format(target - elapsed))
+        else:
+            print('({0:.3f} seconds too slow)'.format(elapsed - target))
 
 
 if __name__ == '__main__':
