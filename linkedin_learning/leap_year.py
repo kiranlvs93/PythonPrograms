@@ -8,8 +8,8 @@ def leap_year_if_cond(year):
         leap = True
         if year % 100 == 0:
             leap = False
-        if year % 400 == 0:
-            leap = True
+            if year % 400 == 0:
+                leap = True
     print("Leap year" if leap else "Not a leap year")
 
 
