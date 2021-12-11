@@ -13,6 +13,7 @@ Extra cheese for any size pizza: + $1
 """
 
 while True:
+    print("***************************************")
     if input("Welcome to Python Pizza Deliveries! Enter 0 to quit or hit Enter::") == '0':
         break
     size = input("What size pizza do you want? S, M, or L::")
@@ -26,6 +27,9 @@ while True:
         bill += 20
     elif size.lower() == 'l':
         bill += 25
+    else:
+        print("Allowed sizes for pizza are S/M/L. Please choose again")
+        continue
 
     if add_pepperoni.lower() == 'y':
         if size.lower() == 's':
