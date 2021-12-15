@@ -6,63 +6,9 @@ I've web-scraping a website that generates the random words
 """
 from requests_html import HTMLSession
 import random
+import hangman_logo_stages as hm
 
-stages = ['''
-  +---+
-  |   |
-  O   |
- /|\  |
- / \  |
-      |
-=========
-''', '''
-  +---+
-  |   |
-  O   |
- /|\  |
- /    |
-      |
-=========
-''', '''
-  +---+
-  |   |
-  O   |
- /|\  |
-      |
-      |
-=========
-''', '''
-  +---+
-  |   |
-  O   |
- /|   |
-      |
-      |
-=========''', '''
-  +---+
-  |   |
-  O   |
-  |   |
-      |
-      |
-=========
-''', '''
-  +---+
-  |   |
-  O   |
-      |
-      |
-      |
-=========
-''', '''
-  +---+
-  |   |
-      |
-      |
-      |
-      |
-=========
-''']
+stages = hm.stages
 
 
 def generate_words():
@@ -130,6 +76,7 @@ def play_game(word_list=["hangman"]):
 
 
 if __name__ == '__main__':
+    print(hm.logo)
     no_of_rounds = input("Welcome to the world of hangman!!!\nHow many rounds would you like to play??")
     scraped_words = generate_words()
     print("We chose a random word for you to guess. Play carefully. The man is at your mercy now!!")
