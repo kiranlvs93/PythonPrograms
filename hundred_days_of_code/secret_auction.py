@@ -43,12 +43,17 @@ def get_winner(bids):
     :return:
     """
     highest_bid = 0
-    winner = ""
-    for bidder, value in bids.items():
-        if value > highest_bid:
-            winner = bidder
-            highest_bid = value
-    print(f"The winner is {winner} with a bid of ${bids[winner]}")
+    # One liner for finding the winner.
+    # Find the maximum bid -> get the position of that bid in values list
+    # Then get the key corresponding at that position from the list of keys
+    winner = list(bids.keys())[list(bids.values()).index(max(bids.values()))]
+    # You can use the below also.
+    # for bidder, value in bids.items():
+    #     if value > highest_bid:
+    #         winner = bidder
+    #         highest_bid = value
+    print(f"The winner is {winner.upper()} with a bid of ${bids[winner]}")
+
 
 
 while True:
