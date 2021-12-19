@@ -3,7 +3,7 @@
 # Coin operated - {"penny":1, "dime":10, "nickel": 5, "quarter": 25}
 # Requirements in the file ../input/Coffee+Machine+Program+Requirements.pdf
 # Commands:
-# 1. off - Turn off the machine
+# 1. off - Turns off the machine
 # 2. report - Report on the resources left
 
 menu = {
