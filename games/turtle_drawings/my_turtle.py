@@ -135,3 +135,31 @@ class MyTurtle:
         :return:
         """
         self.my_screen.exitonclick()
+
+    def move_forward(self):
+        print("Turn forwards")
+        self.timmy.forward(10)
+
+    def move_backward(self):
+        print("Turn backwards")
+        self.timmy.backward(10)
+
+    def rotate_clockwise(self):
+        print("Turn clockwise")
+        self.timmy.right(10)
+
+    def rotate_anti_clockwise(self):
+        print("Turn anti-clockwise")
+        self.timmy.left(10)
+
+    def clear_drawing(self):
+        print("Reset")
+        self.timmy.reset()
+
+    def pen_up(self):
+        print("Pen up")
+        self.timmy.penup()
+
+    def pen_down(self):
+        print("Pen down")
+        self.timmy.pendown()
