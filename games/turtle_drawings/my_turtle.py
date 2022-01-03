@@ -3,6 +3,7 @@
 from turtle import Turtle, Screen
 import random
 import colorgram as cg
+from tkinter import *
 
 
 def get_rgb_color():
@@ -15,13 +16,32 @@ def get_rgb_color():
     return random_color
 
 
+def alert_popup(title, message):
+    """Generate a pop-up window for special messages."""
+    root = Tk()
+    root.title(title)
+    w = 300  # popup window width
+    h = 200  # popup window height
+    sw = root.winfo_screenwidth()
+    sh = root.winfo_screenheight()
+    x = (sw - w) / 2
+    y = (sh - h) / 2
+    root.geometry('%dx%d+%d+%d' % (w, h, x, y))
+    m = message
+    w = Label(root, text=m, width=120, height=10)
+    w.pack()
+    b = Button(root, text="OK", command=root.destroy, width=10)
+    b.pack()
+    mainloop()
+
+
 class MyTurtle:
     def __init__(self, shape="turtle", turtle_color='blue', pen_size=2, screen_color_mode=1, speed='normal'):
-        self.timmy = Turtle()
-        self.timmy.shape(shape)
-        self.timmy.color(turtle_color)
-        self.timmy.pensize(pen_size)
-        self.timmy.speed(speed)
+        self.my_turtle = Turtle()
+        self.my_turtle.shape(shape)
+        self.my_turtle.color(turtle_color)
+        self.my_turtle.pensize(pen_size)
+        self.my_turtle.speed(speed)
         self.my_screen = Screen()
         self.my_screen.colormode(screen_color_mode)
 
@@ -42,15 +62,15 @@ class MyTurtle:
         :return:
         """
         for _ in range(4):
-            self.timmy.forward(100)
-            self.timmy.left(90)
+            self.my_turtle.forward(100)
+            self.my_turtle.left(90)
 
     def draw_dashed_line(self, units):
         for _ in range(units):
-            self.timmy.pendown()
-            self.timmy.forward(1)
-            self.timmy.penup()
-            self.timmy.forward(1)
+            self.my_turtle.pendown()
+            self.my_turtle.forward(1)
+            self.my_turtle.penup()
+            self.my_turtle.forward(1)
 
     def draw_shape(self, no_of_sides):
         """
@@ -58,11 +78,11 @@ class MyTurtle:
         :param no_of_sides:
         :return:
         """
-        self.timmy.pencolor(random.choice(["CornflowerBlue", "DarkOrchid", "IndianRed",
+        self.my_turtle.pencolor(random.choice(["CornflowerBlue", "DarkOrchid", "IndianRed",
                                            "DeepSkyBlue", "LightSeaGreen", "wheat", "SlateGray", "SeaGreen"]))
         for _ in range(no_of_sides):
-            self.timmy.forward(100)
-            self.timmy.left(360 / no_of_sides)
+            self.my_turtle.forward(100)
+            self.my_turtle.left(360 / no_of_sides)
 
     def random_walk(self, speed, no_of_walks=50):
         """
@@ -72,11 +92,11 @@ class MyTurtle:
         :return:
         """
         for _ in range(no_of_walks):
-            self.timmy.color(random.choice(["CornflowerBlue", "DarkOrchid", "IndianRed",
+            self.my_turtle.color(random.choice(["CornflowerBlue", "DarkOrchid", "IndianRed",
                                             "DeepSkyBlue", "LightSeaGreen", "wheat", "SlateGray", "SeaGreen"]))
-            self.timmy.speed(speed)
-            self.timmy.forward(30)
-            self.timmy.setheading(random.choice([0, 90, 180, 270]))
+            self.my_turtle.speed(speed)
+            self.my_turtle.forward(30)
+            self.my_turtle.setheading(random.choice([0, 90, 180, 270]))
 
     def random_walk_rgb(self, speed, no_of_walks=50):
         """
@@ -87,10 +107,10 @@ class MyTurtle:
         """
         for _ in range(no_of_walks):
             # RGB colors vary from 0 to 255. So choosing a random RGB color
-            self.timmy.color(get_rgb_color())
-            self.timmy.speed(speed)
-            self.timmy.forward(30)
-            self.timmy.setheading(random.choice([0, 90, 180, 270]))
+            self.my_turtle.color(get_rgb_color())
+            self.my_turtle.speed(speed)
+            self.my_turtle.forward(30)
+            self.my_turtle.setheading(random.choice([0, 90, 180, 270]))
 
     def draw_spirograph(self, radius, gap_size=50):
         """
@@ -100,9 +120,9 @@ class MyTurtle:
         :return:
         """
         for angle in range(0, 361, gap_size):
-            self.timmy.color(get_rgb_color())
-            self.timmy.circle(radius)
-            self.timmy.setheading(angle)
+            self.my_turtle.color(get_rgb_color())
+            self.my_turtle.circle(radius)
+            self.my_turtle.setheading(angle)
 
     def hirst_painting(self, dot_size=20):
         """
@@ -111,23 +131,23 @@ class MyTurtle:
         :return:
         """
         # Hide the turtle because we dont want it to visible for drawing dots
-        self.timmy.hideturtle()
+        self.my_turtle.hideturtle()
         # move the turtle down diagonally left
-        self.timmy.penup()
-        self.timmy.setheading(225)
-        self.timmy.forward(250)
+        self.my_turtle.penup()
+        self.my_turtle.setheading(225)
+        self.my_turtle.forward(250)
         colors = self.extract_colors("HirstSpotPainting.jpg")
         for _ in range(10):
-            self.timmy.setheading(0)
+            self.my_turtle.setheading(0)
             # A row of 10 dots
             for _ in range(10):
-                self.timmy.color(random.choice(colors))
-                self.timmy.dot(size=dot_size)
-                self.timmy.forward(50)
-            self.timmy.setheading(90)
-            self.timmy.forward(50)
-            self.timmy.setheading(180)
-            self.timmy.forward(500)
+                self.my_turtle.color(random.choice(colors))
+                self.my_turtle.dot(size=dot_size)
+                self.my_turtle.forward(50)
+            self.my_turtle.setheading(90)
+            self.my_turtle.forward(50)
+            self.my_turtle.setheading(180)
+            self.my_turtle.forward(500)
 
     def close_screen(self):
         """
@@ -136,30 +156,30 @@ class MyTurtle:
         """
         self.my_screen.exitonclick()
 
-    def move_forward(self):
-        print("Turn forwards")
-        self.timmy.forward(10)
+    def move_forward(self, distance):
+        print("Move forwards")
+        self.my_turtle.forward(distance)
 
     def move_backward(self):
-        print("Turn backwards")
-        self.timmy.backward(10)
+        print("Move backwards")
+        self.my_turtle.backward(10)
 
     def rotate_clockwise(self):
         print("Turn clockwise")
-        self.timmy.right(10)
+        self.my_turtle.right(10)
 
     def rotate_anti_clockwise(self):
         print("Turn anti-clockwise")
-        self.timmy.left(10)
+        self.my_turtle.left(10)
 
     def clear_drawing(self):
         print("Reset")
-        self.timmy.reset()
+        self.my_turtle.reset()
 
     def pen_up(self):
         print("Pen up")
-        self.timmy.penup()
+        self.my_turtle.penup()
 
     def pen_down(self):
         print("Pen down")
-        self.timmy.pendown()
+        self.my_turtle.pendown()
