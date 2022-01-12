@@ -9,15 +9,14 @@ class Paddle(Turtle):
 
     def __init__(self, pos):
         super().__init__()
-        self.paddle = Turtle("square")
-        self.paddle.penup()
-        self.paddle.color("white")
-        self.paddle.shape("square")
-        self.paddle.shapesize(stretch_len=1, stretch_wid=5)
-        self.paddle.goto(pos)
+        self.shape("square")
+        self.color("white")
+        self.penup()
+        self.shapesize(stretch_len=1, stretch_wid=5)
+        self.goto(pos)
 
     def move_up(self):
-        self.paddle.goto(self.paddle.xcor(), self.paddle.ycor() + MOVE_DISTANCE)
+        self.goto(self.xcor(), self.ycor() + MOVE_DISTANCE)
 
     def move_down(self):
-        self.paddle.goto(self.paddle.xcor(), self.paddle.ycor() - MOVE_DISTANCE)
+        self.goto(self.xcor(), self.ycor() - MOVE_DISTANCE)

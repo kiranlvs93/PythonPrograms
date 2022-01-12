@@ -15,15 +15,28 @@ class Ball(Turtle):
         self.color("white")
         self.shape("circle")
         self.fillcolor("blue")
+        self.x_move = MOVE_DISTANCE
+        self.y_move = MOVE_DISTANCE
+        self.ball_speed = 0.1
 
-    def move(self, heading):
-        self.setheading(heading)
-        self.goto(self.xcor() + MOVE_DISTANCE, self.ycor() + MOVE_DISTANCE)
+    def move(self):
+        self.goto(self.xcor() + self.x_move, self.ycor() + self.y_move)
 
-    def detect_collision(self):
-        if self.xcor() > 280 and self.ycor() > 350:
-            print("Upper wall bounce")
-            self.move(BOTTOM_RIGHT)
+    def detect_wall_collision(self):
+        if self.ycor() < -285 or self.ycor() > 285:
+            print("Hit wall. Bouncing off the wall")
+            self.bounce_walls()
 
-        if self.xcor() > 280 and self.ycor() < -350:
-            print("Lower wall bounce")
+    def bounce_walls(self):
+        self.y_move *= -1
+
+    def bounce_paddle(self):
+        print("Hit Paddle")
+        self.ball_speed *= 0.9
+        self.x_move *= -1
+
+    def reset(self) -> None:
+        print("RESETTING GAME")
+        self.goto(0, 0)
+        self.x_move *= -1
+        self.ball_speed = 0.1
