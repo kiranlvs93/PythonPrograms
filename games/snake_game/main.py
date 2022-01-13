@@ -34,7 +34,8 @@ while game_is_on:
         # Create snake food randomly on the screen
         food.fresh_food()
         snake.extend_snake()
-        score.update_score()
+        score.increase_score()
+        score.update_score_board()
     # Detect collision with walls
     if snake.detect_collision():
         game_is_on = False
