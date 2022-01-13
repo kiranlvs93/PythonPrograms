@@ -156,7 +156,7 @@ class MyTurtle:
         """
         self.my_screen.exitonclick()
 
-    def move_forward(self, distance):
+    def move_forward(self, distance=10):
         print("Move forwards")
         self.my_turtle.forward(distance)
 
@@ -174,7 +174,7 @@ class MyTurtle:
 
     def clear_drawing(self):
         print("Reset")
-        self.my_turtle.reset()
+        self.my_turtle.clear()
 
     def pen_up(self):
         print("Pen up")
