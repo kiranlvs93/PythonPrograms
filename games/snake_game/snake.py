@@ -83,3 +83,12 @@ class Snake:
                 print("You hit the TAIL. GAME OVER!!")
                 return True
         return False
+
+    def reset_snake(self):
+        """
+        Removing the snake from the screen and recreating the snake
+        :return:
+        """
+        for i in range(len(self.squares)):
+            self.squares[i].hideturtle()
+        self.__init__()

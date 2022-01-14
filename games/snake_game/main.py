@@ -35,10 +35,9 @@ while game_is_on:
         food.fresh_food()
         snake.extend_snake()
         score.increase_score()
-        score.update_score_board()
     # Detect collision with walls
     if snake.detect_collision():
-        game_is_on = False
         score.game_over_msg()
+        snake.reset_snake()
 
 screen.exitonclick()
