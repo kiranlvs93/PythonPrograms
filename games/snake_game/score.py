@@ -38,7 +38,6 @@ class Score(Turtle):
         self.write("GAME OVER", move=False, align=SCORE_ALIGNMENT, font=FONT_STYLE)
         time.sleep(2)
         self.update_high_score()
-        # self.high_score = max(self.score, self.high_score)
         self.score = 0
         self.update_score_board()
 
