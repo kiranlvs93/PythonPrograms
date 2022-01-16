@@ -16,18 +16,32 @@ class Scoreboard(Turtle):
         self.update_scoreboard()
 
     def update_scoreboard(self):
+        """
+        Update the score board
+        :return:
+        """
         self.clear()
         self.write(f"LEVEL: {self.level}", move=False, align="center", font=FONT)
 
     def increment_level(self):
+        """
+        Increment the level by 1
+        :return:
+        """
         self.level += 1
 
-    def level_up_msg(self):
-        print("LEVEL UP")
+    def display_message(self, message):
+        """
+        Display a message in the center of the screen
+        :param message:
+        :return:
+        """
+        print(message)
         self.goto((0, 0))
         self.clear()
-        self.write(f"LEVEL UP", align="center", font=FONT)
-        increase_move_distance()
+        self.write(message, align="center", font=FONT)
         time.sleep(3)
         self.goto(POSITION)
         self.update_scoreboard()
+        if message == "LEVEL UP":
+            increase_move_distance()
