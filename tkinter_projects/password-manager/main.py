@@ -1,4 +1,7 @@
 from tkinter import *
+from tkinter import messagebox
+import random
+import pyperclip
 
 FONT_NAME = "Courier"
 FONT_SIZE = 15
@@ -8,10 +11,60 @@ DEFAULT_EMAIL = "kiranlvs93@gmail.com"
 
 # ---------------------------- PASSWORD GENERATOR ------------------------------- #
 def generate_password():
-    pass
+    """
+    Generate password randomly
+    Password includes 6-10 letters, 2-4 symbols and 2-4 numbers
+    :return:
+    """
+    letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u',
+               'v', 'w', 'x', 'y', 'z', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p',
+               'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
+    numbers = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
+    symbols = ['!', '#', '$', '%', '&', '(', ')', '*', '+']
+
+    nr_letters = random.randint(6, 10)
+    nr_symbols = random.randint(2, 4)
+    nr_numbers = random.randint(2, 4)
+
+    password_list = random.sample(letters, nr_letters) + random.sample(symbols, nr_symbols) + random.sample(numbers,
+                                                                                                            nr_numbers)
+    random.shuffle(password_list)
+    password = "".join(password_list)
+
+    # Copy the password to clipboard
+    pyperclip.copy(password)
+
+    # Delete the existing word in password field and insert the generated password
+    password_entry.delete(0, END)
+    password_entry.insert(0, password)
 
 
 # ---------------------------- SAVE PASSWORD ------------------------------- #
+def save_form_data():
+    """
+    Save the form data if all the fields are filled.
+    Even if one of the fields is blank, show the user an error message
+    If all the fields are filled, then ask for confirmation. If OK, append data to the file.
+    :return:
+    """
+    website = website_entry.get()
+    email = email_entry.get()
+    password = password_entry.get()
+
+    if not all([len(website), len(email), len(password)]):
+        messagebox.showerror(title="Empty Fields Detected",
+                             message="Dont leave any field empty. All fields are mandatory")
+    else:
+        is_ok = messagebox.askokcancel("Confirmation",
+                                       f"Details you entered are\n\n{website}\n{email}\n{password}."
+                                       f"\n\n Proceed with Save?")
+        if is_ok:
+            with open("passwords.txt", "a") as file:
+                file.write(f"{website}|{email}|{password}\n")
+            website_entry.delete(0, END)
+            password_entry.delete(0, END)
+            messagebox.showinfo(title="Save Successful", message="Password saved successfully")
+
 
 # ---------------------------- UI SETUP ------------------------------- #
 window = Tk()
@@ -52,7 +105,7 @@ password_entry.grid(row=3, column=1)
 gen_password_btn = Button(text="Generate Password", width=30, command=generate_password)
 gen_password_btn.grid(row=4, column=1, columnspan=2)
 
-add_btn = Button(text="Add", width=30, command=generate_password)
+add_btn = Button(text="Add", width=30, command=save_form_data)
 add_btn.grid(row=5, column=1, columnspan=2)
 
 window.mainloop()
