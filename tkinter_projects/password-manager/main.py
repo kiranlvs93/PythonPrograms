@@ -2,11 +2,28 @@ from tkinter import *
 from tkinter import messagebox
 import random
 import pyperclip
+import json
 
 FONT_NAME = "Courier"
 FONT_SIZE = 15
 FONT = (FONT_NAME, FONT_SIZE, "bold")
 DEFAULT_EMAIL = "kiranlvs93@gmail.com"
+
+
+# ---------------------------- SEARCH MECHANISM ------------------------------- #
+def search():
+    """
+    Search for a website and fetch the credentials
+    :return:
+    """
+    search_keyword = website_entry.get()
+    try:
+        with open("passwords.json", "r") as data_file:
+            data = json.load(data_file)
+            messagebox.showinfo(title=search_keyword,
+                                message=f"Email:{data[search_keyword]['email']}\nPassword:{data[search_keyword]['password']}")
+    except (FileNotFoundError, KeyError) as e:
+        messagebox.showerror(title="No Data Found", message=f"Info not found for {search_keyword}. Error::{e}")
 
 
 # ---------------------------- PASSWORD GENERATOR ------------------------------- #
@@ -40,6 +57,28 @@ def generate_password():
 
 
 # ---------------------------- SAVE PASSWORD ------------------------------- #
+def write_details_to_file(user_inp, file_data):
+    """
+    While adding a website's data, check if the data already exists.
+    If data is already present, prompt the user that the data is already present
+    If user wants to overwrite, update the password else take the user back to the screen
+    :param user_inp:
+    :param file_data:
+    :return: Response from the message box
+    """
+    overwrite = True
+    if website_entry.get() in file_data.keys():
+        overwrite = messagebox.askokcancel("Duplicate Entry",
+                                           "Website already present in the file. Do you want to overwrite?")
+    if overwrite:
+        with open("passwords.json", "w") as data_file:
+            file_data.update(user_inp)
+            json.dump(file_data, data_file, indent=4)
+        website_entry.delete(0, END)
+        password_entry.delete(0, END)
+        messagebox.showinfo(title="Save Successful", message="Password saved successfully")
+
+
 def save_form_data():
     """
     Save the form data if all the fields are filled.
@@ -50,31 +89,35 @@ def save_form_data():
     website = website_entry.get()
     email = email_entry.get()
     password = password_entry.get()
+    user_inp = {website: {"email": email, "password": password}}
 
     if not all([len(website), len(email), len(password)]):
         messagebox.showerror(title="Empty Fields Detected",
                              message="Dont leave any field empty. All fields are mandatory")
     else:
         is_ok = messagebox.askokcancel("Confirmation",
-                                       f"Details you entered are\n\n{website}\n{email}\n{password}."
+                                       f"Details you entered are\n\n{website}\n{email}\n{password}"
                                        f"\n\n Proceed with Save?")
         if is_ok:
-            with open("passwords.txt", "a") as file:
-                file.write(f"{website}|{email}|{password}\n")
-            website_entry.delete(0, END)
-            password_entry.delete(0, END)
-            messagebox.showinfo(title="Save Successful", message="Password saved successfully")
+            file_data = {}
+            try:
+                with open("passwords.json", "r") as data_file:
+                    file_data = json.load(data_file)
+            except FileNotFoundError:
+                pass
+            finally:
+                write_details_to_file(user_inp, file_data)
 
 
 # ---------------------------- UI SETUP ------------------------------- #
 window = Tk()
 window.title("PASSWORD MANAGER")
-window.config(padx=50, pady=50)
+window.config(padx=20, pady=20)
 
 # Adding canvas
-canvas = Canvas(width=250, height=200, highlightthickness=0)
+canvas = Canvas(width=200, height=200, highlightthickness=0)
 lock_image = PhotoImage(file="logo.png")
-canvas.create_image(125, 100, image=lock_image)
+canvas.create_image(100, 100, image=lock_image)
 canvas.grid(row=0, column=1)
 
 # Adding Labels
@@ -88,24 +131,27 @@ password_label = Label(text="Password:")
 password_label.grid(row=3, column=0)
 
 # Adding the entries
-website_entry = Entry(width=35)
-website_entry.grid(row=1, column=1, columnspan=2)
+website_entry = Entry()
+website_entry.grid(row=1, column=1, sticky="EW")
 # Set focus on launch
 website_entry.focus()
 
-email_entry = Entry(width=35)
-email_entry.grid(row=2, column=1, columnspan=2)
+email_entry = Entry()
+email_entry.grid(row=2, column=1, columnspan=2, sticky="EW")
 # Insert a pre-defined text
 email_entry.insert(index=0, string=DEFAULT_EMAIL)
 
-password_entry = Entry(width=35)
-password_entry.grid(row=3, column=1)
+password_entry = Entry()
+password_entry.grid(row=3, column=1, sticky="EW")
 
 # Adding buttons
-gen_password_btn = Button(text="Generate Password", width=30, command=generate_password)
-gen_password_btn.grid(row=4, column=1, columnspan=2)
+search_btn = Button(text="Search", command=search)
+search_btn.grid(row=1, column=2, sticky="EW")
 
-add_btn = Button(text="Add", width=30, command=save_form_data)
-add_btn.grid(row=5, column=1, columnspan=2)
+gen_password_btn = Button(text="Generate Password", command=generate_password)
+gen_password_btn.grid(row=3, column=2, sticky="EW")
+
+add_btn = Button(text="Add", width=35, command=save_form_data)
+add_btn.grid(row=4, column=1, columnspan=2, sticky="EW")
 
 window.mainloop()
