@@ -33,8 +33,8 @@ def send_email(message, to_address):
     :param to_address:
     :return:
     """
-    my_email = "kirancoding22@gmail.com"
-    password = "Coding@2022"
+    my_email = "__YOUR_EMAIL__"
+    password = "__YOUR_PASSWORD__"
     with smtplib.SMTP("smtp.gmail.com", port=587) as connection:
         connection.starttls()
         connection.login(my_email, password)
