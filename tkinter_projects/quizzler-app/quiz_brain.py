@@ -10,15 +10,28 @@ class QuizBrain:
         self.current_question = None
 
     def still_has_questions(self):
+        """
+        Check if the last question is reached. Since the question number starts from 0, we've used < to check the cond
+        :return:
+        """
         return self.question_number < len(self.question_list)
 
     def next_question(self):
+        """
+        Get the next question in the list. Using html module to get the text in English format for special characters
+        :return:
+        """
         self.current_question = self.question_list[self.question_number]
         self.question_number += 1
         curr_question_text = html.unescape(self.current_question.text)
         return f"Q.{self.question_number}: {curr_question_text} (True/False): "
 
     def check_answer(self, user_answer):
+        """
+        Check if the user answer is correct. Increase the score by 1 for correct answer only.
+        :param user_answer:
+        :return: True for correct answer and False for wrong answer
+        """
         correct_answer = self.current_question.answer
         if user_answer.lower() == correct_answer.lower():
             self.score += 1

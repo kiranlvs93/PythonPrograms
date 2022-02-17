@@ -12,6 +12,8 @@ class QuizInterface:
 
     def __init__(self, quiz_brain: QuizBrain):
         self.quiz_ob = quiz_brain
+
+        # Create a window
         self.window = Tk()
         self.window.title("Quiz App")
         self.window.config(padx=20, pady=20, bg=THEME_COLOR)
@@ -41,6 +43,12 @@ class QuizInterface:
         self.window.mainloop()
 
     def next_question(self):
+        """
+        Get the next question and display it in the question text as long as there are questions
+        If the last question is reached, disable both the buttons and display that user has reached the end of quiz
+        For every question, change the background to white
+        :return:
+        """
         self.canvas.config(bg=WHITE)
         if self.quiz_ob.still_has_questions():
             question = self.quiz_ob.next_question()
@@ -51,14 +59,28 @@ class QuizInterface:
             self.true_btn.config(state="disabled")
             self.false_btn.config(state="disabled")
 
-
     def true_button_clicked(self):
+        """
+        If True button is clicked, send True to check_answer method
+        If the answer is correct, flash Green in question text box for a second else flash Red
+        :return:
+        """
         self.give_feedback(self.quiz_ob.check_answer("true"))
 
     def false_button_clicked(self):
+        """
+        If False button is clicked, send False to check_answer method
+        If the answer is correct, flash Green in question text box for a second else flash Red
+        :return:
+        """
         self.give_feedback(self.quiz_ob.check_answer("false"))
 
     def give_feedback(self, result):
+        """
+        If the answer is correct, flash Green in question text box for a second else flash Red
+        :param result:
+        :return:
+        """
         if result:
             self.canvas.configure(bg=GREEN)
         else:
