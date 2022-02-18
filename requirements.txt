@@ -45,3 +45,4 @@ pynput~=1.7.4
 lxml~=4.7.1
 tornado~=6.1
 pyperclip~=1.8.2
+twilio~=7.6.0
