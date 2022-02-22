@@ -22,8 +22,9 @@ def get_stock_price():
     response.raise_for_status()
     response_json = response.json()["Time Series (Daily)"]
     # get the price of the last two days
-    price_yest = 200  # response_json.pop(list(response_json.keys())[0])["4. close"]
-    price_day_before = 100  # response_json.pop(list(response_json.keys())[0])["4. close"]
+    price_yest = response_json.pop(list(response_json.keys())[0])["4. close"]
+    price_day_before = response_json.pop(list(response_json.keys())[0])["4. close"]
+    # Return the change percentage
     change = ((float(price_yest) - float(price_day_before)) / float(price_day_before)) * 100
     return change
 
@@ -48,7 +49,7 @@ def get_news():
 def send_notification(notification):
     """
     Use https://www.twilio.com to send message
-    # Send a seperate message with the percentage change and each article's title and description to your phone number.
+    # Send a separate message with the percentage change and each article's title and description to your phone number.
     :param notification:
     :return:
     """
@@ -70,6 +71,7 @@ if __name__ == '__main__':
     price_change = get_stock_price()
     up_down_symbol = "🔺" if price_change > 0 else "🔻"
     notification_message = f"{STOCK}: {up_down_symbol}{price_change}%\n\n"
+    # Send notification only if the change is at least 5% (up or down)
     if abs(price_change) >= 5:
         notification_message += get_news()
         send_notification(notification_message)
