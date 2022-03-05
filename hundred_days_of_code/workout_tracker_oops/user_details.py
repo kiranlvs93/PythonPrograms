@@ -6,7 +6,7 @@ class UserDetails:
     gender = ""
     weight_kg = 0.0
     height_cm = 0.0
-    age = 30
+    age = 0
     track_type_id = 0
     query = ""
     track_query = ""
