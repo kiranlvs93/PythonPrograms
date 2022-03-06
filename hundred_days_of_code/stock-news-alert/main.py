@@ -1,5 +1,6 @@
 from twilio.rest import Client
 import requests
+import os
 
 STOCK = "TSLA"
 COMPANY_NAME = "Tesla Inc"
@@ -17,6 +18,7 @@ def get_stock_price():
     When STOCK price increase/decreases by 5% between yesterday and the day before yesterday then print("Get News").
     :return:
     """
+    print("Fetching stock price....")
     stock_price_url = f"https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol={STOCK}&apikey={STOCK_PRICE_API_KEY}"
     response = requests.get(stock_price_url)
     response.raise_for_status()
@@ -26,6 +28,7 @@ def get_stock_price():
     price_day_before = response_json.pop(list(response_json.keys())[0])["4. close"]
     # Return the change percentage
     change = ((float(price_yest) - float(price_day_before)) / float(price_day_before)) * 100
+    print(f"{change}% change")
     return change
 
 
@@ -34,14 +37,15 @@ def get_news():
     Get the first 3 news pieces for the COMPANY_NAME
     :return:
     """
+    print("Fetching news....")
     parameter = {"pageSize": 3, "apiKey": NEWS_API_KEY, "q": COMPANY_NAME}
     news_api = f"https://newsapi.org/v2/everything"
     response = requests.get(url=news_api, params=parameter)
     response.raise_for_status()
     articles = response.json()["articles"]
     message_to_be_sent = ""
-    for i, article in enumerate(articles):
-        message_to_be_sent += f"Headline {i + 1}::{article['title']}\n\tBrief::{article['description']}\n\n"
+    for i, article in enumerate(articles, start=1):
+        message_to_be_sent += f"Headline {i}::{article['title']}\n\t Brief::{article['description']}\n\n"
     print("Sending below message::\n", message_to_be_sent)
     return message_to_be_sent
 
@@ -53,17 +57,18 @@ def send_notification(notification):
     :param notification:
     :return:
     """
+    print(f"Sending notification to {TO_NUMBER}")
     account_sid = TWILIO_ACC_ID
     auth_token = TWILIO_AUTH_TOKEN
     client = Client(account_sid, auth_token)
 
     message = client.messages.create(
-        from_=('whatsapp:%s' % TWILO_NUMBER),
+        from_=('whatsapp:%s' % TWILIO_NUMBER),
         body=notification,
         to=('whatsapp:%s' % TO_NUMBER)
     )
 
-    print(message.sid)
+    print("Message sent with message sid-", message.sid)
 
 
 if __name__ == '__main__':
