@@ -3,12 +3,12 @@ import requests
 
 STOCK = "TSLA"
 COMPANY_NAME = "Tesla Inc"
-STOCK_PRICE_API_KEY = "<API_KEY>"
-NEWS_API_KEY = "<API_KEY>"
-TWILIO_ACC_ID = "<Twilio Acc ID>"
-TWILIO_AUTH_TOKEN = "<Twilio Auth Token>"
-TWILO_NUMBER = "<Twilio_Number>"
-TO_NUMBER = "<To_Number>"
+STOCK_PRICE_API_KEY = os.getenv("STOCK_PRICE_API_KEY")
+NEWS_API_KEY = os.getenv("NEWS_API_KEY")
+TWILIO_ACC_ID = os.getenv("TWILIO_ACC_ID")
+TWILIO_AUTH_TOKEN = os.getenv("TWILIO_AUTH_TOKEN")
+TWILIO_NUMBER = os.getenv("TWILIO_NUMBER")
+TO_NUMBER = os.getenv("TO_NUMBER")
 
 
 def get_stock_price():
