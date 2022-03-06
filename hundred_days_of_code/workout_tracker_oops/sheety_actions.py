@@ -10,5 +10,10 @@ HEADERS = {"Authorization": SHEETY_AUTH, "Content-Type": "application/json"}
 
 class Sheety:
     def update_sheet(self, params):
+        """
+        Update the google sheet with the response from the nutritionix api
+        :param params:
+        :return:
+        """
         print("Updating the sheet")
         requests.post(url=URL, headers=HEADERS, json=params)

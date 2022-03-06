@@ -17,12 +17,23 @@ class CalorieCounter:
     activities = [dict()]
 
     def get_nutrient_details(self, params):
+        """
+        Get the nutrition details from the API
+        :param params:
+        :return:
+        """
         response = requests.post(url=NUTRITIONIX_BASE_URL + NUTRITIONIX_NUTRIENTS_ENDPOINT, headers=headers,
                                  json=params)
         print(response.json())
         print(response.raise_for_status())
 
     def get_exercise_details(self, params):
+        """
+        Get the exercise details like exercise name, duration and calories burnt from the natural lang input
+        :param params:
+        :return:
+        """
+        print("Getting response")
         response = requests.post(url=NUTRITIONIX_BASE_URL + NUTRITIONIX_EXERCISE_ENDPOINT, headers=headers, json=params)
         print(response.json())
         response.raise_for_status()

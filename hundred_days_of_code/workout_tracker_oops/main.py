@@ -38,8 +38,5 @@ if __name__ == '__main__':
         print("***********Tracking exercise***************")
         calCounter.get_exercise_details(params=params)
         for activity in calCounter.activities:
-            print(activity)
+            print("Adding activity::", activity)
             sheety.update_sheet(activity)
-
-
-
