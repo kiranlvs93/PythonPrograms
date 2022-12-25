@@ -1,0 +1,2 @@
+To run the flask app we should execute the following command:
+flask --app <app name> run
