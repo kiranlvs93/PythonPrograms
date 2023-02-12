@@ -1,0 +1,32 @@
+<!-- templates/input_form.html -->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>GUESS THE NUMBER!!</title>
+    <style>
+      body {
+      text-align: center;
+    }
+    </style>
+</head>
+<body>
+<h1>Guess a number between 1 and 100</h1>
+<img src=https://media.giphy.com/media/3o7aCSPqXE5C6T8tBC/giphy.gif>
+<form action="http://localhost:5000/input" method="post">
+    <label for="input"><b>Enter your guess here-></b></label>
+    <input type="text" id="input" name="input">
+    <br><br>
+    <input type="submit" value="Submit">
+</form>
+
+<script>
+      function readInput() {
+        var input = document.getElementById("input").value;
+        alert("You entered: " + input);
+      }
+
+</script>
+</body>
+</html>
